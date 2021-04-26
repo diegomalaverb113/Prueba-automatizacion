@@ -1,0 +1,83 @@
+package tests;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import junit.framework.Assert;
+
+
+public class TestGoogle {
+	//VARIABLES
+	private WebDriver driver;
+	private static final String TIPO_DRIVER = "webdriver.chrome.driver";
+	private static final String PATH_DRIVER = "./src/test/resources/webDriver/chromedriver.exe";
+	private String URL = "https://www.choucairtesting.com/empleos-testing/";
+	
+	@BeforeClass
+	public static void setUpBeforeClass()
+	{
+		System.out.println("INICIO DE TESTS");
+		System.setProperty(TIPO_DRIVER, PATH_DRIVER);
+	}
+	
+	@Before
+	public void setUp()
+	{
+		driver = new ChromeDriver();
+		driver.get(URL);
+	}
+	
+	
+	@Test
+	public void testSourch()
+	{
+		String textEnviado = "automatizacion";
+		WebElement searchbox = driver.findElement(By.name("search_location"));
+		searchbox.sendKeys(textEnviado);
+		searchbox.submit();
+		
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		//VALIDAR SI EL TITULO CONTIENE EL TEXTO ENVIADO
+		String titulo = driver.getTitle();
+		//Assert.assertTrue("VALIDA EL TITULO", titulo.contains(textEnviado));
+		
+	}
+	
+	@Test
+	public void testSourch01()
+	{
+		String textEnviado = "automatizacion";
+		WebElement searchbox = driver.findElement(By.name("search_keywords"));
+		searchbox.sendKeys(textEnviado);
+		searchbox.submit();
+		
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		//VALIDAR SI EL TITULO CONTIENE EL TEXTO ENVIADO
+		String titulo = driver.getTitle();
+		//Assert.assertTrue("VALIDA EL TITULO", titulo.contains(textEnviado));
+		
+	}
+	
+	@After
+	public void tearDown()
+	{
+		//driver.quit();
+	}
+	
+	@AfterClass
+	public static void tearDownAfterClass()
+	{
+		System.out.println("FINALIZA LOS TEST");
+	}
+	
+
+}
